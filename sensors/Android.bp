@@ -30,6 +30,9 @@ cc_library_shared {
     ],
     cflags: [
         "-DLOG_TAG=\"sensors.nothing\"",
-    ],
+    ] + select(soong_config_variable("nothing_sensors", "tp_udfps_path"), {
+        any @ flag_val: ["-DTP_UDFPS_PATH=\"" + flag_val + "\""],
+        default: ["-DTP_UDFPS_PATH=\"/sys/class/spi_master/spi0/spi0.0/fts_gesture_fod_pressed\""],
+    }),
     vendor: true,
 }
