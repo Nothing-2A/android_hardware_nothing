@@ -49,6 +49,7 @@ android_app {
         "androidx.savedstate_savedstate-compose",
         "androidx.window_window-core",
         "kotlin-stdlib",
+        "org.lineageos.platform.internal",
     ],
 
     optimize: {

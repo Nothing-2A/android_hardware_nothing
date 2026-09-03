@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import org.lineageos.nothing.dirac.pref.DiracPrefs
+import org.lineageos.nothing.dirac.util.BlackThemeObserver
 import org.lineageos.nothing.dirac.util.DiracUtils
 import androidx.core.content.edit
 
@@ -36,6 +37,9 @@ class DiracViewModel(application: Application) : AndroidViewModel(application) {
     private val _volume = MutableStateFlow(prefs.getInt("dirac_volume_pref", 10))
     val volume: StateFlow<Int> = _volume.asStateFlow()
 
+    private val blackThemeObserver = BlackThemeObserver(application)
+    val blackThemeEnabled: StateFlow<Boolean> = blackThemeObserver.enabled
+
     fun setEnabled(enabled: Boolean) {
         prefs.edit { putBoolean("dirac_enable", enabled) }
         _isEnabled.value = enabled
@@ -58,5 +62,10 @@ class DiracViewModel(application: Application) : AndroidViewModel(application) {
         prefs.edit { putInt("dirac_volume_pref", volume) }
         _volume.value = volume
         DiracUtils.setVolume(volume)
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        blackThemeObserver.release()
     }
 }
