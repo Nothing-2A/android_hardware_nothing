@@ -15,7 +15,6 @@ import android.os.SystemClock
 import android.os.SystemProperties
 import android.util.Log
 import android.view.KeyEvent
-
 import org.lineageos.nothing.dirac.DiracSound
 import org.lineageos.nothing.dirac.pref.DiracPrefs
 
@@ -41,10 +40,11 @@ class DiracUtils(private val context: Context) {
                 val savedScenario = sharedPrefs.getString("dirac_scenario_pref", "MUSIC")
                 setScenario(savedScenario)
 
-                val savedPreset = sharedPrefs.getString(
-                    "dirac_preset_pref",
-                    "0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0"
-                )
+                val savedPreset =
+                    sharedPrefs.getString(
+                        "dirac_preset_pref",
+                        "0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0",
+                    )
                 setLevel(savedPreset)
 
                 mInitialized = true
@@ -150,7 +150,8 @@ class DiracUtils(private val context: Context) {
         // getActiveSessionsForUser/@hide — getActiveSessions(null) is public and sufficient.
         val sessions: List<MediaController> =
             mMediaSessionManager?.getActiveSessions(null) ?: return
-        sessions.firstOrNull { PlaybackState.STATE_PLAYING == getMediaControllerPlaybackState(it) }
+        sessions
+            .firstOrNull { PlaybackState.STATE_PLAYING == getMediaControllerPlaybackState(it) }
             ?.let { triggerPlayPause(it) }
     }
 

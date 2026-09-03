@@ -9,10 +9,9 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.util.Log
-
+import androidx.core.content.edit
 import org.lineageos.nothing.dirac.pref.DiracPrefs
 import org.lineageos.nothing.dirac.util.DiracUtils
-import androidx.core.content.edit
 
 class BootCompletedReceiver : BroadcastReceiver() {
 

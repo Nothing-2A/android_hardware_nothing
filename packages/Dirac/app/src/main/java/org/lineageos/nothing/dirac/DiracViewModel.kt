@@ -6,6 +6,7 @@
 package org.lineageos.nothing.dirac
 
 import android.app.Application
+import androidx.core.content.edit
 import androidx.lifecycle.AndroidViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -13,7 +14,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import org.lineageos.nothing.dirac.pref.DiracPrefs
 import org.lineageos.nothing.dirac.util.BlackThemeObserver
 import org.lineageos.nothing.dirac.util.DiracUtils
-import androidx.core.content.edit
 
 class DiracViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -26,12 +26,10 @@ class DiracViewModel(application: Application) : AndroidViewModel(application) {
         MutableStateFlow(prefs.getString("dirac_scenario_pref", "MUSIC") ?: "MUSIC")
     val scenario: StateFlow<String> = _scenario.asStateFlow()
 
-    private val _preset = MutableStateFlow(
-        prefs.getString(
-            "dirac_preset_pref",
-            "0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0"
-        ) ?: ""
-    )
+    private val _preset =
+        MutableStateFlow(
+            prefs.getString("dirac_preset_pref", "0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0") ?: ""
+        )
     val preset: StateFlow<String> = _preset.asStateFlow()
 
     private val _volume = MutableStateFlow(prefs.getInt("dirac_volume_pref", 10))

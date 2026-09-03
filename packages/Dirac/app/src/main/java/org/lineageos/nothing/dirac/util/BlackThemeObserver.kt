@@ -32,11 +32,12 @@ class BlackThemeObserver(private val context: Context) :
         _enabled.value = readValue()
     }
 
-    private fun readValue() = LineageSettings.Secure.getInt(
-        context.contentResolver,
-        LineageSettings.Secure.BERRY_BLACK_THEME,
-        0,
-    ) != 0
+    private fun readValue() =
+        LineageSettings.Secure.getInt(
+            context.contentResolver,
+            LineageSettings.Secure.BERRY_BLACK_THEME,
+            0,
+        ) != 0
 
     fun release() {
         context.contentResolver.unregisterContentObserver(this)

@@ -23,37 +23,41 @@ class DiracSound(priority: Int, audioSession: Int) {
             UUID.fromString("ae737c63-f2c0-5457-909e-1e940c91b67b")
 
         private val ctor by lazy {
-            AudioEffect::class.java.getDeclaredConstructor(
-                UUID::class.java, UUID::class.java,
-                Int::class.java, Int::class.java
-            ).also { it.isAccessible = true }
-        }
-
-        private val mCheckStatus by lazy {
-            AudioEffect::class.java.getDeclaredMethod("checkStatus", Int::class.java)
+            AudioEffect::class
+                .java
+                .getDeclaredConstructor(
+                    UUID::class.java,
+                    UUID::class.java,
+                    Int::class.java,
+                    Int::class.java,
+                )
                 .also { it.isAccessible = true }
         }
 
+        private val mCheckStatus by lazy {
+            AudioEffect::class.java.getDeclaredMethod("checkStatus", Int::class.java).also {
+                it.isAccessible = true
+            }
+        }
+
         private val mSetParamIntInt by lazy {
-            AudioEffect::class.java.getDeclaredMethod(
-                "setParameter", Int::class.java, Int::class.java
-            ).also { it.isAccessible = true }
+            AudioEffect::class
+                .java
+                .getDeclaredMethod("setParameter", Int::class.java, Int::class.java)
+                .also { it.isAccessible = true }
         }
 
         private val mSetParamIntArrayByteArray by lazy {
-            AudioEffect::class.java.getDeclaredMethod(
-                "setParameter", IntArray::class.java, ByteArray::class.java
-            ).also { it.isAccessible = true }
+            AudioEffect::class
+                .java
+                .getDeclaredMethod("setParameter", IntArray::class.java, ByteArray::class.java)
+                .also { it.isAccessible = true }
         }
     }
 
     private val fx: AudioEffect =
-        ctor.newInstance(
-            EFFECT_TYPE_NULL,
-            EFFECT_TYPE_DIRAC_SOUND,
-            priority,
-            audioSession
-        ) as AudioEffect
+        ctor.newInstance(EFFECT_TYPE_NULL, EFFECT_TYPE_DIRAC_SOUND, priority, audioSession)
+            as AudioEffect
 
     private fun checkStatus(status: Int) {
         mCheckStatus.invoke(fx, status)
