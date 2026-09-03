@@ -23,6 +23,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
@@ -46,8 +47,16 @@ class DiracSettingsActivity : ComponentActivity() {
         setContent {
             val context = LocalContext.current
             val darkTheme = isSystemInDarkTheme()
-            val colorScheme =
+            val blackThemeEnabled by viewModel.blackThemeEnabled.collectAsState()
+            val baseColorScheme =
                 if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
+            val colorScheme = if (darkTheme && blackThemeEnabled) baseColorScheme.copy(
+                background = Color.Black,
+                surface = Color.Black,
+                surfaceContainerLowest = Color.Black,
+                surfaceContainerLow = Color.Black,
+                surfaceContainer = Color.Black
+            ) else baseColorScheme
 
             MaterialTheme(colorScheme = colorScheme) {
                 // Manages the scroll state to collapse the MediumTopAppBar
