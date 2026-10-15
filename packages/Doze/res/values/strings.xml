@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="doze_settings_help_title">Doze help</string>
+    <string name="doze_settings_help_text">Configure when the display wakes for always-on and pickup gestures.</string>
+</resources>
